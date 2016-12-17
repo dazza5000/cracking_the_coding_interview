@@ -49,6 +49,7 @@ public class Chapter5Activity extends AppCompatActivity {
         return (N | M);
     }
 
+    // Cracking the coding interview 5.2
     private String realToString(double real) {
         if ((real >= 1L) || (real <= 0L)) {
             return "ERROR";
