@@ -12,8 +12,9 @@ public class Chapter5Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Log.d("darran", Integer.toBinaryString(intoN(19, 1024, 2, 6)));
-        Log.d("darran", Integer.toBinaryString(intoN(19, 1283, 2, 6)));
+//        Log.d("darran", Integer.toBinaryString(intoN(19, 1024, 2, 6)));
+//        Log.d("darran", Integer.toBinaryString(intoN(19, 1283, 2, 6)));
+        Log.d("darran", realToString(.72));
     }
 
     // Cracking the coding interview 5.1
@@ -47,6 +48,33 @@ public class Chapter5Activity extends AppCompatActivity {
         //Returned N combined with M using OR bitwise operator;
         return (N | M);
     }
+
+    private String realToString(double real) {
+        if ((real >= 1L) || (real <= 0L)) {
+            return "ERROR";
+        }
+
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(".");
+        while (real > 0) {
+            if (stringBuilder.length() > 32) {
+                return "ERROR";
+            }
+            double num = real *2;
+            Log.d("darran", "num is: "+num);
+            if (num >= 1) {
+                stringBuilder.append(1);
+                real = num - 1;
+            } else {
+                stringBuilder.append(0);
+                real = num;
+            }
+            Log.d("darran", "current string is: " +stringBuilder.toString());
+        }
+
+        return stringBuilder.toString();
+    }
+
 
     private void asBinary(int toBinary) {
         Log.d("darran", Integer.toBinaryString(toBinary));
