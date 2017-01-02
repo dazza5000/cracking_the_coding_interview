@@ -25,6 +25,95 @@ public class Chapter1Activity extends AppCompatActivity {
         Log.d("darran", "The numeric value of b is: " + Character.getNumericValue('b'));
         Log.d("darran", "The numeric value of y is: " + Character.getNumericValue('y'));
         Log.d("darran", "The numeric value of z is: " + Character.getNumericValue('z'));
+
+        Log.d("darran", "" + oneAway("bake", "make"));
+
+        String[][] tests = {{"a", "b", "true"},
+                {"", "d", "true"},
+                {"d", "de", "true"},
+                {"pale", "pse", "false"},
+                {"acdsfdsfadsf", "acdsgdsfadsf", "true"},
+                {"acdsfdsfadsf", "acdsfdfadsf", "true"},
+                {"acdsfdsfadsf", "acdsfdsfads", "true"},
+                {"acdsfdsfadsf", "cdsfdsfadsf", "true"},
+                {"adfdsfadsf", "acdfdsfdsf", "false"},
+                {"adfdsfadsf", "bdfdsfadsg", "false"},
+                {"adfdsfadsf", "affdsfads", "false"},
+                {"pale", "pkle", "true"},
+                {"pkle", "pable", "false"}};
+        for (int i = 0; i < tests.length; i++) {
+            String[] test = tests[i];
+            String a = test[0];
+            String b = test[1];
+            boolean expected = test[2].equals("true");
+
+            test(a, b, expected);
+            test(b, a, expected);
+        }
+
+        int[][] testMatrix = new int[7][7];
+        Log.d("darran", "matrix is" +Arrays.deepToString(testMatrix));
+
+        int[][] matrix = randomMatrix(3, 3, 0, 9);
+
+        Log.d("darran", "matrix is" +Arrays.deepToString(matrix));
+
+        Log.d("darran", "matrix is" +Arrays.deepToString(rotateMatrix(matrix)));
+
+    }
+
+    public int[][] rotateMatrix(int[][] matrix) {
+        int matrixHeight = matrix.length;
+        int matrixWidth = matrix[0].length;
+
+        int[][] rotatedMatrix = new int[matrixHeight][matrixWidth];
+
+        for (int i = 0; i < matrixWidth; i++) {
+            for (int j = 0; j  < matrixWidth; j++) {
+                rotatedMatrix[j][matrixWidth -1 -i] = matrix[i][j];
+            }
+        }
+
+        return rotatedMatrix;
+    }
+
+    public boolean oneAway(String stringOne, String stringTwo) {
+        int diffCount = 0;
+        int lengthDiff = Math.abs(stringOne.length() - stringTwo.length());
+        int currentChar = 0;
+
+
+        if (lengthDiff > 1) {
+            return false;
+        } else if (lengthDiff == 1) {
+            diffCount++;
+        }
+        for (int i = 0;  i < stringOne.length() && i < stringTwo.length(); i++) {
+            if(stringOne.charAt(i) != stringTwo.charAt(i)) {
+                diffCount++;
+                break;
+            }
+        }
+
+        if (diffCount <=1) {
+            diffCountBackwards(stringOne, stringTwo, currentChar, diffCount);
+        }
+
+        return diffCount <= 1;
+    }
+
+    private void diffCountBackwards(String stringOne, String stringTwo, int currentChar, int diffCount) {
+
+        int index = 1;
+        while (((stringOne.length() -index) >= currentChar) && ((stringTwo.length() - index) >= currentChar)) {
+            if ((stringOne.charAt(stringOne.length()-index)) != (stringTwo.charAt(stringTwo.length()-index))) {
+                diffCount +=1;
+                if (diffCount > 1) {
+                    return;
+                }
+            }
+            index++;
+        }
     }
 
     public boolean isPalindrome(String palindromeTestString) {
@@ -94,5 +183,34 @@ public class Chapter1Activity extends AppCompatActivity {
             }
         }
         return -1;
+    }
+
+    public void test(String a, String b, boolean expected) {
+        boolean resultA = oneAway(a, b);
+
+        if (resultA == expected) {
+            System.out.println(a + ", " + b + ": success");
+        } else {
+            System.out.println(a + ", " + b + ": error");
+        }
+    }
+
+
+    public static int[][] randomMatrix(int M, int N, int min, int max) {
+        int[][] matrix = new int[M][N];
+        for (int i = 0; i < M; i++) {
+            for (int j = 0; j < N; j++) {
+                matrix[i][j] = randomIntInRange(min, max);
+            }
+        }
+        return matrix;
+    }
+
+    public static int randomInt(int n) {
+        return (int) (Math.random() * n);
+    }
+
+    public static int randomIntInRange(int min, int max) {
+        return randomInt(max + 1 - min) + min;
     }
 }
