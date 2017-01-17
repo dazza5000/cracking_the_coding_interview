@@ -1,4 +1,4 @@
-package org.emeritus.myapplication;
+package org.emeritus.myapplication.stacks;
 
 import java.util.EmptyStackException;
 

@@ -5,6 +5,8 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
+import org.emeritus.myapplication.stacks.CrackingStack;
+
 import java.util.Stack;
 
 /**
@@ -19,10 +21,16 @@ public class Chapter3Activity extends AppCompatActivity{
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-//        CrackingStack<Integer> integerCrackingStack = new CrackingStack<>();
-//        integerCrackingStack.push(7);
-//        integerCrackingStack.push(3);
-//        integerCrackingStack.push(10);
+        CrackingStack<Integer> integerCrackingStack = new CrackingStack<>();
+        integerCrackingStack.push(7);
+        integerCrackingStack.push(3);
+        integerCrackingStack.push(10);
+
+        Stack<Integer> testStack = new Stack<>();
+        testStack.push(4);
+        testStack.push(3);
+        testStack.push(10);
+        testStack.push(7);
 //
 //        Log.d(TAG, "Popped value is: " +integerCrackingStack.pop());
 //        Log.d(TAG, "Popped value is: " +integerCrackingStack.pop());
@@ -40,6 +48,8 @@ public class Chapter3Activity extends AppCompatActivity{
         Log.d(TAG, "The min is: " +stackWithMin2.min());
         stackWithMin2.pop();
         Log.d(TAG, "The min is: " +stackWithMin2.min());
+
+        Log.d(TAG, " " + stackSorter(testStack));
 
     }
 
@@ -70,4 +80,22 @@ public class Chapter3Activity extends AppCompatActivity{
             }
         }
     }
+
+    public Stack<Integer> stackSorter(Stack<Integer> incomingStack) {
+
+    Stack<Integer> tempStack = new Stack<>();
+
+        while(!incomingStack.isEmpty()) {
+            int temp = incomingStack.pop();
+            while(!tempStack.isEmpty() && temp > tempStack.peek()) {
+                incomingStack.push(tempStack.pop());
+            }
+            tempStack.push(temp);
+        }
+
+        return tempStack;
+
+    }
+
+
 }
