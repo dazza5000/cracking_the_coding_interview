@@ -7,6 +7,7 @@ import android.util.Log;
 
 import org.emeritus.myapplication.stacks.CrackingStack;
 
+import java.util.LinkedList;
 import java.util.Stack;
 
 /**
@@ -94,6 +95,61 @@ public class Chapter3Activity extends AppCompatActivity{
         }
 
         return tempStack;
+
+    }
+
+    // Question 3.6
+
+    private class AnimalShelter extends LinkedList<Object> {
+        private LinkedListNodeObject linkedListHead;
+        private LinkedListNodeObject linkedListTail;
+        private LinkedListNode firstDog;
+        private LinkedListNode firstCat;
+
+        public void enqueue(Object newAnimal){
+            if (linkedListTail == null) {
+                linkedListHead = new LinkedListNodeObject(newAnimal);
+                linkedListTail = new LinkedListNodeObject(newAnimal);
+            } else {
+                linkedListTail.setNext(new LinkedListNodeObject(newAnimal));
+            }
+        }
+
+        public Object dequeueAny() {
+            LinkedListNodeObject temp = linkedListHead;
+            if (linkedListHead.next != null) {
+                linkedListHead = linkedListHead.next;
+            }
+            return temp.data;
+        }
+
+        public Object dequeueCat() {
+            LinkedListNodeObject currentNode = linkedListHead;
+            while (currentNode != null) {
+                if (currentNode instanceof Object) {
+                    LinkedListNodeObject tempNode = currentNode;
+                    currentNode.data = currentNode.next.data;
+                    currentNode.next = currentNode.next.next;
+                    return tempNode;
+                }
+            }
+                return null;
+
+        }
+
+        public Object dequeueDog() {
+            LinkedListNodeObject currentNode = linkedListHead;
+            while (currentNode != null) {
+                if (currentNode instanceof Object) {
+                    LinkedListNodeObject tempNode = currentNode;
+                    currentNode.data = currentNode.next.data;
+                    currentNode.next = currentNode.next.next;
+                    return tempNode;
+                }
+            }
+            return null;
+
+        }
 
     }
 
