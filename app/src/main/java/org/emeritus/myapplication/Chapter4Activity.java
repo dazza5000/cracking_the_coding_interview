@@ -7,6 +7,7 @@ import android.util.Log;
 
 import org.emeritus.myapplication.graphs.Graph;
 import org.emeritus.myapplication.graphs.Node;
+import org.emeritus.myapplication.graphs.SimpleNode;
 
 import java.util.LinkedList;
 
@@ -26,6 +27,13 @@ public class Chapter4Activity extends AppCompatActivity {
         Node start = nodes[3];
         Node end = nodes[5];
         Log.d("darran", "A route exists: " + doesRouteExist(graph, start, end));
+
+        int[] increasingArray = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+
+
+        SimpleNode minimalBST = createMinimalBST(increasingArray);
+
+        Log.d("darran", "Create minimal BST: " + minimalBST);
 
     }
 
@@ -56,7 +64,21 @@ public class Chapter4Activity extends AppCompatActivity {
         return false;
     }
 
-    public void createMinimalBST(int[] incomingArray) {
+    public SimpleNode createMinimalBST(int[] incomingArray) {
+       return  createMinimalBST(incomingArray, 0, incomingArray.length -1);
+    }
+
+    private SimpleNode createMinimalBST(int[] incomingArray, int start, int end) {
+        if (end < start) {
+            return null;
+        }
+
+        int mid = ((end + start) / 2);
+
+        SimpleNode currentNode = new SimpleNode(incomingArray[mid]);
+        currentNode.left = createMinimalBST(incomingArray, start, mid - 1);
+        currentNode.right = createMinimalBST(incomingArray, mid + 1, end);
+        return currentNode;
 
     }
 
