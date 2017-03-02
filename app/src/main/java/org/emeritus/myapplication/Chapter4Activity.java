@@ -67,7 +67,7 @@ public class Chapter4Activity extends AppCompatActivity {
     }
 
 
-    private SimpleNode createMinimalBST(int[] incomingArray, int start, int end) {
+    private static SimpleNode createMinimalBST(int[] incomingArray, int start, int end) {
         if (end < start) {
             return null;
         }
@@ -81,7 +81,7 @@ public class Chapter4Activity extends AppCompatActivity {
     }
 
 
-    public static Node createMinimalBST(int[] incomingArray) {
+    public static SimpleNode createMinimalBST(int[] incomingArray) {
         if (incomingArray == null) {
             return null;
         }
