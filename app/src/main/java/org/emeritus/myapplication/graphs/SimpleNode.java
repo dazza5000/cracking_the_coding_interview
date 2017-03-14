@@ -6,7 +6,7 @@ package org.emeritus.myapplication.graphs;
 
 public class SimpleNode {
 
-    int value;
+    public int value;
     public SimpleNode left;
     public SimpleNode right;
 

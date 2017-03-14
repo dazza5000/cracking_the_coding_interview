@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.widget.Toast;
 
 import org.emeritus.myapplication.graphs.Graph;
 import org.emeritus.myapplication.graphs.Node;
@@ -27,11 +26,11 @@ public class Chapter4Activity extends AppCompatActivity {
         Node[] nodes = graph.getNodes();
         Node start = nodes[3];
         Node end = nodes[2];
-        Log.d("darran", "A route exists: " + doesRouteExistTakeTwo(graph, start, end));
-        Toast.makeText(this, "A route exists: " + doesRouteExistTakeTwo(graph, start, end), Toast.LENGTH_SHORT).show();
+//        Log.d("darran", "A route exists: " + doesRouteExistTakeTwo(graph, start, end));
+//        Toast.makeText(this, "A route exists: " + doesRouteExistTakeTwo(graph, start, end), Toast.LENGTH_SHORT).show();
+
 
         int[] increasingArray = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
-
 
         SimpleNode minimalBST = createMinimalBST(increasingArray);
 
@@ -67,27 +66,43 @@ public class Chapter4Activity extends AppCompatActivity {
     }
 
 
-    private static SimpleNode createMinimalBST(int[] incomingArray, int start, int end) {
-        if (end < start) {
-            return null;
-        }
+    private SimpleNode createMinimalBST(int[] incomingArray) {
+        SimpleNode root = createMinimalBST(incomingArray, 0, incomingArray.length -1);
+        preOrderTraversalWithLevels(root, 0);
+        return root;
+    }
 
+    private SimpleNode createMinimalBST(int[] incomingArray, int start, int end) {
+        if (end < start) return null;
         int mid = ((end + start) / 2);
-
-        SimpleNode currentNode = new SimpleNode(incomingArray[mid]);
-        currentNode.left = createMinimalBST(incomingArray, start, mid - 1);
-        currentNode.right = createMinimalBST(incomingArray, mid + 1, end);
-        return currentNode;
+        SimpleNode currentRoot = new SimpleNode(incomingArray[mid]);
+        currentRoot.left = createMinimalBST(incomingArray, start, mid - 1);
+        currentRoot.right = createMinimalBST(incomingArray, mid +1, end);
+        return currentRoot;
     }
 
 
-    public static SimpleNode createMinimalBST(int[] incomingArray) {
-        if (incomingArray == null) {
-            return null;
-        }
-        return createMinimalBST(incomingArray, 0, incomingArray.length -1);
-
-    }
+//    private static SimpleNode createMinimalBST(int[] incomingArray, int start, int end) {
+//        if (end < start) {
+//            return null;
+//        }
+//
+//        int mid = ((end + start) / 2);
+//
+//        SimpleNode currentNode = new SimpleNode(incomingArray[mid]);
+//        currentNode.left = createMinimalBST(incomingArray, start, mid - 1);
+//        currentNode.right = createMinimalBST(incomingArray, mid + 1, end);
+//        return currentNode;
+//    }
+//
+//
+//    public static SimpleNode createMinimalBST(int[] incomingArray) {
+//        if (incomingArray == null) {
+//            return null;
+//        }
+//        return createMinimalBST(incomingArray, 0, incomingArray.length -1);
+//
+//    }
 
 
     public static Graph createNewGraph()
@@ -139,5 +154,16 @@ public class Chapter4Activity extends AppCompatActivity {
             }
         }
         return false;
+    }
+
+
+
+    private void preOrderTraversalWithLevels(SimpleNode node, int level){
+        if (node != null) {
+            Log.d("darran", String.format("Node is:  %s and level is: %s", node.value, level));
+            level += 1;
+            preOrderTraversalWithLevels(node.left, level);
+            preOrderTraversalWithLevels(node.right, level);
+            }
     }
 }
